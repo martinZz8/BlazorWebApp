@@ -14,4 +14,8 @@
     <ProjectReference Include="..\Shared\BlazorWebApp.Shared.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="wwwroot\icons\" />
+  </ItemGroup>
+
 </Project>
