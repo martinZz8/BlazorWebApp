@@ -1,11 +1,10 @@
-﻿<button @onclick="IncreaseBananasCount" class="btn btn-info"><span class="oi oi-plus"></span></button>
+﻿@inject IBananaService BananaService
+
+<button @onclick="IncreaseBananasCount" class="btn btn-info"><span class="oi oi-plus"></span></button>
 
 @code {
-    [Parameter]
-    public EventCallback<int> BananasAdded { get; set; }
-
-    public async Task IncreaseBananasCount()
+    public void IncreaseBananasCount()
     {
-        await BananasAdded.InvokeAsync(10);
+        BananaService.AddBananas(10);
     }
 }
