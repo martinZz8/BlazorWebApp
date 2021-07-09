@@ -21,7 +21,7 @@ namespace BlazorWebApp.Client.Services
             Bananas += amount;
             BananasChanged();
         }
-        
+
         private void BananasChanged() => OnChange.Invoke();
     }
 }
