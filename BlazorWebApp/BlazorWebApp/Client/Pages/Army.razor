@@ -1,0 +1,36 @@
+﻿@page "/army"
+@inject IUnitService UnitService 
+
+<h3>My army</h3>
+@if (UnitService.MyUnits.Count == 0)
+{
+    <p>You have no units</p>
+}
+else
+{
+    <table class="table">
+        @foreach (var userUnit in UnitService.MyUnits)
+        {
+            <tr>
+                <td>
+                    @switch (userUnit.UnitId)
+                    {
+                        case 1:<img src="icons/knight.png" /> break;
+                        case 2: <img src="icons/archer.png" /> break;
+                        case 3: <img src="icons/mage.png" />break;
+                    }
+                </td>
+                <td>
+                    @UnitService.Units.First(u => u.Id == userUnit.UnitId).Title
+                </td>
+                <td>
+                    @userUnit.HitPoints HP
+                </td>
+            </tr>
+        }
+    </table>
+}
+
+@code {
+
+}
