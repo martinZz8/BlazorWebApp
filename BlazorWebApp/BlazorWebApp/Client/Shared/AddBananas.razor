@@ -1,10 +1,21 @@
 ﻿@inject IBananaService BananaService
 
-<button @onclick="() => IncreaseBananasCount(10)" class="btn btn-info"><span class="oi oi-plus"></span></button>
+<button @onclick="IncreaseBananasCount" class="btn btn-info"><span class="oi oi-plus"></span></button>
+<div class="d-flex ml-1">
+    <span>Select quantity:</span>
+    <select @bind="selectedBananasQuantityIndex" class="form-control">
+        @for (int index=0; index < BananasQuantity.Count(); index++)
+        {
+            <option value="@index">@BananasQuantity[index] Bananas</option>
+        }
+    </select>
+</div>
 
 @code {
-    public void IncreaseBananasCount(int amount)
+    public int selectedBananasQuantityIndex = 0;
+    public int[] BananasQuantity = { 10, 50, 100, 500, 1000 };
+    public void IncreaseBananasCount()
     {
-        BananaService.AddBananas(amount);
+        BananaService.AddBananas(BananasQuantity[selectedBananasQuantityIndex]);
     }
 }
