@@ -3,3 +3,18 @@
     justify-content: center;
     width: 100%;
 }
+
+.unauthorized-links ::deep a {
+    margin: 0px;
+    padding: 0px 5px 0px 2px;
+    border-right: solid black 1px;
+}
+
+.unauthorized-links ::deep a:first-child {
+    padding-left: 0px;
+}
+
+.unauthorized-links ::deep a:last-child {
+    border-right: none;
+    padding-right: 0px;
+}

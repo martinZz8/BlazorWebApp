@@ -1,5 +1,6 @@
 ﻿@page "/army"
-@inject IUnitService UnitService 
+@inject IUnitService UnitService
+@attribute [Authorize]
 
 <h3>My army</h3>
 @if (UnitService.MyUnits.Count == 0)

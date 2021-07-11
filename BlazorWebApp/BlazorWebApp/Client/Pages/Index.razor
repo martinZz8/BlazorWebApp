@@ -1,6 +1,16 @@
 ﻿@page "/"
 
-<h1>Welcome to Blazor Battles!</h1>
+<AuthorizeView>
+    <Authorized>
+        <h1>Hi, @context.User.Identity.Name. Welcome back!</h1>
+        Let's admire and <a href="army">your belowed army.</a>
+    </Authorized>
+    <NotAuthorized>
+        <h1>Welcome to Blazor Battles!</h1>
+        <Login></Login>
+    </NotAuthorized>
+</AuthorizeView>
+
 <!--
 Welcome to your new app.
 <SurveyPrompt Title="How is Blazor working for you?" />
