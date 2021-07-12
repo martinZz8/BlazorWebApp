@@ -3,35 +3,45 @@
 @attribute [Authorize]
 
 <h3>My army</h3>
-@if (UnitService.MyUnits.Count == 0)
+@if (UnitService.Units.Count > 0)
 {
-    <p>You have no units</p>
+    @if (UnitService.MyUnits.Count > 0)
+    {
+        <table class="table">
+            @foreach (var userUnit in UnitService.MyUnits)
+            {
+                <tr>
+                    <td>
+                        @switch (userUnit.UnitId)
+                        {
+                            case 1:<img src="icons/knight.png" /> break;
+                            case 2: <img src="icons/archer.png" /> break;
+                            case 3: <img src="icons/mage.png" />break;
+                        }
+                    </td>
+                    <td>
+                        @UnitService.Units.First(u => u.Id == userUnit.UnitId).Title
+                    </td>
+                    <td>
+                        @userUnit.HitPoints HP
+                    </td>
+                </tr>
+            }
+        </table>
+    }
+    else
+    {
+        <p>You have no units</p>
+    }
 }
 else
 {
-    <table class="table">
-        @foreach (var userUnit in UnitService.MyUnits)
-        {
-            <tr>
-                <td>
-                    @switch (userUnit.UnitId)
-                    {
-                        case 1:<img src="icons/knight.png" /> break;
-                        case 2: <img src="icons/archer.png" /> break;
-                        case 3: <img src="icons/mage.png" />break;
-                    }
-                </td>
-                <td>
-                    @UnitService.Units.First(u => u.Id == userUnit.UnitId).Title
-                </td>
-                <td>
-                    @userUnit.HitPoints HP
-                </td>
-            </tr>
-        }
-    </table>
+    <p>Loading units ...</p>
 }
 
 @code {
-
+    protected override async Task OnInitializedAsync()
+    {
+        await UnitService.LoadUnitsAsync();
+    }
 }
