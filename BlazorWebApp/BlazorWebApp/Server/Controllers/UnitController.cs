@@ -20,7 +20,7 @@ namespace BlazorWebApp.Server.Controllers
         };
 
         [HttpGet]
-        public IActionResult GetUnits()
+        public async Task<IActionResult> GetUnits()
         {
             return Ok(Units);
         }
