@@ -9,8 +9,8 @@ namespace BlazorWebApp.Shared
 {
     public class UserLogin
     {
-        [Required(ErrorMessage = "Please eneter the user name")]
-        public string Username { get; set; }
+        [Required(ErrorMessage = "Please eneter an email address.")]
+        public string Email { get; set; }
         [Required(ErrorMessage = "Please eneter password")]
         public string Password { get; set; }
     }
