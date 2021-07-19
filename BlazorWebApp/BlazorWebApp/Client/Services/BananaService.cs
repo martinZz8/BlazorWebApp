@@ -19,24 +19,19 @@ namespace BlazorWebApp.Client.Services
             _http = http;
         }
 
-        public void EatBananas(int amount)
+        public async Task AddBananas(int amount)
         {
-            Bananas -= amount;
+            var result = await _http.PutAsJsonAsync<int>("api/User/addbananas", amount);
+            Bananas = await result.Content.ReadFromJsonAsync<int>();
             BananasChanged();
-        }
-
-        public void AddBananas(int amount)
-        {
-            Bananas += amount;
-            BananasChanged();
-        }
-
-        private void BananasChanged() => OnChange.Invoke();
+        }        
 
         public async Task GetBananas()
         {
             Bananas = await _http.GetFromJsonAsync<int>("api/user/getbananas");
             BananasChanged();
         }
+
+        private void BananasChanged() => OnChange.Invoke();
     }
 }

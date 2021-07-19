@@ -17,6 +17,7 @@
                             case 1: <img src="icons/knight.png" /> break;
                             case 2: <img src="icons/archer.png" /> break;
                             case 3: <img src="icons/mage.png" />break;
+                            case 5: <img src="icons/barbarian.png" />break;
                         }
                     </td>
                     <td>
@@ -43,5 +44,6 @@ else
     protected override async Task OnInitializedAsync()
     {
         await UnitService.LoadUnitsAsync();
+        await UnitService.LoadUserUnitsAsync();
     }
 }
