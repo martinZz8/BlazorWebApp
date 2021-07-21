@@ -79,6 +79,20 @@ namespace BlazorWebApp.Server.Data
             }
         }
 
+        public async Task AddFirstUnit(int userId, int unitId)
+        {
+            var unit = await _context.Units.FirstOrDefaultAsync<Unit>(u => u.Id == unitId);
+            var newUserUnit = new UserUnit
+            {
+                UnitId = unitId,
+                UserId = userId,
+                HitPoints = unit.HitPoints
+            };
+
+            _context.UserUnits.Add(newUserUnit);
+            await _context.SaveChangesAsync();
+        }
+
         private void CreatePasswordHash(string password, out byte[] passwordHash, out byte[] passwordSalt)
         {
             using (var hmac = new HMACSHA512())

@@ -34,7 +34,7 @@ namespace BlazorWebApp.Server.Controllers
 
             if (response.Success)
             {
-                //here i should add a start unit to the player (by unit id)
+                await _authRepo.AddFirstUnit(response.Data, request.StartUnitId);
                 return Ok(response);
             }
             else

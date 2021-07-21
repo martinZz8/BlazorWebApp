@@ -11,5 +11,6 @@ namespace BlazorWebApp.Server.Data
         Task<ServiceResponse<int>> Register(User user, string password);
         Task<ServiceResponse<string>> Login(string email, string password);
         Task<bool> UserExist(string email);
+        Task AddFirstUnit(int userId, int unitId);
     }
 }

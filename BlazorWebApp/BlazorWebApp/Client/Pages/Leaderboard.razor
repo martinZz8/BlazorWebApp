@@ -1,0 +1,63 @@
+﻿@page "/leaderboard"
+@inject ILeaderboardService LeaderboardService 
+@inject AuthenticationStateProvider AuthStateProvider 
+
+<h3>Leaderboard</h3>
+
+@if(LeaderboardService.Leaderboard != null)
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>User</th>
+                <th>Victories</th>
+                <th>Defeats</th>
+                <th>Battles</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var entry in LeaderboardService.Leaderboard)
+            {
+                <tr style="@GetMyStyle(entry.UserId)">
+                    <td>@entry.Rank</td>
+                    <td>@entry.Username</td>
+                    <td>@entry.Victories</td>
+                    <td>@entry.Defeats</td>
+                    <td>@entry.Battles</td>
+                    <td>
+                        @if (entry.UserId != myUserId)
+                        {
+                            <button class="btn btn-primary">Fight</button>
+                        }
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <span>Loading leaderboard...</span>
+}
+
+@code {    
+    int myUserId;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await LeaderboardService.GetLeaderBoard();
+
+        var authState = await AuthStateProvider.GetAuthenticationStateAsync();
+        myUserId = int.Parse(authState.User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier).Value);
+    }
+
+    public string GetMyStyle(int userId)
+    {
+        if (userId == myUserId)
+            return "color: green; font-weight: 600;";
+        else
+            return string.Empty;
+    }
+}
