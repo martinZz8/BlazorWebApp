@@ -1,0 +1,45 @@
+﻿@page "/battlelog"
+@inject IBattleService BattleService
+@attribute [Authorize]
+
+<h3>Battle Log</h3>
+@if (BattleService.LastBattle.Log.Count > 0)
+{
+    <h3 style="@GetScoreClass()">You @battleScore last battle.</h3>
+    <ul class="list-group">
+        @foreach (var round in BattleService.LastBattle.Log)
+        {
+            <li class="@GetLogClass(round)">@round</li>
+        }
+    </ul>
+}
+else
+{
+    <span>There are no logs from last battle.</span>
+}
+
+@code {
+    private string battleScore;
+
+    private string GetLogClass(string round)
+    {
+        if (round.Contains("kills"))
+            return "list-group-item list-group-item-danger";
+        else
+            return "list-group-item";
+    }
+
+    private string GetScoreClass()
+    {
+        if (BattleService.LastBattle.IsVictory)
+        {
+            battleScore = "won";
+            return "color: green;";
+        }
+        else
+        {
+            battleScore = "lost";
+            return "color: red;";
+        }
+    }
+}

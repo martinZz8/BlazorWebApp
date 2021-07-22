@@ -19,7 +19,7 @@ namespace BlazorWebApp.Client.Services
 
         public IList<UserStatistic> Leaderboard { get; set; }
 
-        public async Task GetLeaderBoard()
+        public async Task GetLeaderboard()
         {
             Leaderboard = await _http.GetFromJsonAsync<IList<UserStatistic>>("api/user/leaderboard");
         }

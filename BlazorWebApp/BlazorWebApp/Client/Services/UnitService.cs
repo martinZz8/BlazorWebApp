@@ -11,13 +11,13 @@ namespace BlazorWebApp.Client.Services
 {
     public class UnitService : IUnitService
     {
-        private readonly IToastService _itoastService;
+        private readonly IToastService _toastService;
         private readonly HttpClient _http;
         private readonly IBananaService _bananaService;
 
         public UnitService(IToastService toastService, HttpClient http, IBananaService bananaService)
         {
-            _itoastService = toastService;
+            _toastService = toastService;
             _http = http;
             _bananaService = bananaService;
         }
@@ -33,7 +33,7 @@ namespace BlazorWebApp.Client.Services
             if(result.StatusCode == System.Net.HttpStatusCode.OK)
             {
                 await _bananaService.GetBananas();
-                _itoastService.ShowSuccess($"Your {unit.Title} has been built!", "Unit built!");
+                _toastService.ShowSuccess($"Your {unit.Title} has been built!", "Unit built!");
                 return "success";
 
                 //Console.WriteLine($"{unit.Title} was built!");
@@ -41,7 +41,7 @@ namespace BlazorWebApp.Client.Services
             }
             else
             {
-                _itoastService.ShowError(await result.Content.ReadAsStringAsync());
+                _toastService.ShowError(await result.Content.ReadAsStringAsync());
                 return "failure";
             }
         }
@@ -57,6 +57,18 @@ namespace BlazorWebApp.Client.Services
         public async Task LoadUserUnitsAsync()
         {
             MyUnits = await _http.GetFromJsonAsync<IList<UserUnitResponse>>("api/userunit");
+        }
+
+        public async Task ReviveArmy()
+        {
+            var result = await _http.PostAsJsonAsync<string>("api/userunit/revive", null);
+            if (result.StatusCode == System.Net.HttpStatusCode.OK)
+                _toastService.ShowSuccess(await result.Content.ReadAsStringAsync());
+            else
+                _toastService.ShowError(await result.Content.ReadAsStringAsync());
+
+            await LoadUserUnitsAsync();
+            await _bananaService.GetBananas();
         }
     }
 }

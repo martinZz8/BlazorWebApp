@@ -13,16 +13,25 @@ Please log in below or <a href="register">register</a> for a new account.
         <label for="password">Password</label>
         <InputText id="password" @bind-Value="user.Password" class="form-control" type="password"></InputText>
     </div>
-    <button type="submit" class="btn btn-primary">Login</button>
+    <div class="d-flex">
+        <button type="submit" class="btn btn-primary mr-3">Login</button>
+        @if(loggingIn)
+        {
+            <div class="loader"></div>
+        }
+    </div>    
     <ValidationSummary />
 </EditForm>
 
 
 @code {
+    private bool loggingIn = false;
     private UserLogin user = new UserLogin();
 
     private async void HandleLogin()
     {
+        loggingIn = true;
+
         var result = await AuthService.Login(user);
 
         if(result.Success)
@@ -35,5 +44,8 @@ Please log in below or <a href="register">register</a> for a new account.
         {
             ToastService.ShowError(result.Message);
         }
+
+        loggingIn = false;
+        StateHasChanged();
     }
 }

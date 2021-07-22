@@ -2,7 +2,12 @@
 @inject IUnitService UnitService
 @attribute [Authorize]
 
-<h3>My army</h3>
+
+<div class="d-flex justify-content-center pb-1">
+    <h3 class="mr-auto">My army</h3>
+    <button class="btn btn-warning" @onclick="ReviveArmy">Revive your army for 1000 bananas</button>
+</div>
+
 @if (UnitService.Units.Count > 0)
 {
     @if (UnitService.MyUnits.Count > 0)
@@ -14,7 +19,7 @@
                     <td>
                         @switch (userUnit.UnitId)
                         {
-                            case 1: <img src="icons/knight.png" /> break;
+                            case 1:<img src="icons/knight.png" /> break;
                             case 2: <img src="icons/archer.png" /> break;
                             case 3: <img src="icons/mage.png" />break;
                             case 5: <img src="icons/barbarian.png" />break;
@@ -45,5 +50,10 @@ else
     {
         await UnitService.LoadUnitsAsync();
         await UnitService.LoadUserUnitsAsync();
+    }
+
+    private async Task ReviveArmy()
+    {
+        await UnitService.ReviveArmy();
     }
 }

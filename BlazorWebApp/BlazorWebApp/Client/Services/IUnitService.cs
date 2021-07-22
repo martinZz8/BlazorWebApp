@@ -13,5 +13,6 @@ namespace BlazorWebApp.Client.Services
         Task<string> AddUnit(int unitId);
         Task LoadUnitsAsync();
         Task LoadUserUnitsAsync();
+        Task ReviveArmy();
     }
 }

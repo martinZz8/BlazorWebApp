@@ -24,17 +24,19 @@ namespace BlazorWebApp.Server.Controllers
         public async Task<IActionResult> Register(UserRegister request)
         {
             var response = await _authRepo.Register(
-                new User {
+                new User
+                {
                     Username = request.Username,
                     Email = request.Email,
                     Bananas = request.Bananas,
                     DateOfBirth = request.DateOfBirth,
                     IsConfirmed = request.isConfirmed,
-                }, request.Password);
+                },
+                request.Password,
+                request.StartUnitId);
 
             if (response.Success)
             {
-                await _authRepo.AddFirstUnit(response.Data, request.StartUnitId);
                 return Ok(response);
             }
             else

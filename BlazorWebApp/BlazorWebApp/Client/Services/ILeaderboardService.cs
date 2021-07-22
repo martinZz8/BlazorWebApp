@@ -9,6 +9,6 @@ namespace BlazorWebApp.Client.Services
     public interface ILeaderboardService
     {
         IList<UserStatistic> Leaderboard { get; set; }
-        Task GetLeaderBoard();
+        Task GetLeaderboard();
     }
 }
